@@ -11,20 +11,14 @@ use App\Models\Setting;
 
 class ArticleController extends Controller
 {
+    public function __construct(ArticleRepository $repository){
+        parent::__construct();
+        $this->ArticleRepository = $repository;
+    }
 
     public function index(Request $request)
     {
-        $query = Article::query();
-        if($request->keyword){
-            $query->where('title','like','%'.$request->keyword.'%');
-        }
-        if($request->category_id){
-            $query->where('category_id',$request->category_id);
-        }
-
-        $articles = $query->with('category',function($query){
-            $query->select('id','name');
-        })->where('active',1)->orderBy('recommended')->latest()->paginate(10);
+        $articles = $this->ArticleRepository->list(10);
         return response()->json($articles,200);
     }
 
@@ -35,7 +29,7 @@ class ArticleController extends Controller
                                 }],)->where('id',$article_id)->first();
 
         if($article->active!=1){
-            return response()->json(null,404);
+            abort(404);
         }
         $article->views++;
         $article->save();
@@ -49,34 +43,10 @@ class ArticleController extends Controller
      */
     public function like(Article $article, Request $request)
     {
-        // $uid = auth()->id();
-        // if(!$uid){
-        //     return response()->json(['message'=>'用户未登录'],404);
-        // }
-        $uid = 1;
-
-        $like = UserLike::where('post_type',UserLike::ARTICLE)->where('post_id',$article->id)->where('user_id',$uid)->first();
-
-        if(!$like && $request->like == true ){
-            $like = UserLike::create([
-                'post_type'=>UserLike::ARTICLE,
-                'post_id'=>$article->id,
-                'user_id'=>$uid,
-            ]);
-            $article->likes++;
-
-        }elseif($like && $request->like == false ){
-
-            $like->delete();
-            if($article->like>0){
-                $article->likes--;
-            }
-            
-        }
-
-        $article->save();
         
-        return response()->json([],200);
+        $result = $this->ArticleRepository->setLike($article,$request);
+        
+        return response()->json($result,200);
     }
 
     public function comments(Article $article){

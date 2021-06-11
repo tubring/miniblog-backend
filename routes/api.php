@@ -55,52 +55,55 @@ Route::group(['namespace'=>'App\Http\Controllers\Api',],function(){
 });
 
 Route::group(['namespace'=>'App\Http\Controllers\Admin','prefix'=>'admin'],function(){
-
+    
     Route::group(['middleware'=>'auth:admin-api'],function(){
+        Route::get('dashboard','DashboardController@index')->name('admin.dashboard.index');
+
         Route::get('articles','ArticleController@index')->name('admin.articles.index');
+        Route::post('articles','ArticleController@store')->name('admin.articles.store');
+        Route::get('articles/{article}','ArticleController@show')->name('admin.articles.show');
+        Route::put('articles/{article}','ArticleController@update')->name('admin.articles.update');
+        Route::delete('articles/{article}','ArticleController@destroy')->name('admin.articles.destroy');
+        Route::get('articles/{article}/active','ArticleController@active')->name('admin.articles.active');
+        Route::get('articles/{article}/comments','ArticleController@comments')->name('admin.articles.comments');
+
+        Route::get('banners','BannerController@index')->name('admin.banners.index');
+        Route::post('banners','BannerController@store')->name('admin.banners.store');
+        Route::get('banners/{banner}','BannerController@show')->name('admin.banners.show');
+        Route::put('banners/{banner}','BannerController@update')->name('admin.banners.update');
+        Route::delete('banners/{banner}','BannerController@destroy')->name('admin.banners.destroy');
+        Route::get('banners/{banner}/active','BannerController@active')->name('admin.banners.active');
+
+        Route::get('comments','CommentController@index')->name('admin.comments.index');
+        Route::get('comments/{comment}','CommentController@show')->name('admin.comments.show');
+        Route::get('comments/approved','CommentController@approved')->name('admin.comments.approved');
+        Route::delete('comments/{comment}','CommentController@destroy')->name('admin.comments.destroy');
+
+        Route::get('feedbacks','FeedbackController@index')->name('admin.feedbacks.index');
+        Route::get('feedbacks/{feedback}','FeedbackController@show')->name('admin.feedbacks.show');
+        Route::delete('feedbacks/{feedback}','FeedbackController@destroy')->name('admin.feedbacks.destroy');
+        Route::get('feedbacks/{feedback}/read','FeedbackController@destroy')->name('admin.feedbacks.destroy');
+
+        Route::post('file/upload','FileController@store')->name('admin.files.upload');
+        Route::delete('file/delete','FileController@destroy')->name('admin.files.destroy');
+
+        Route::resource('category','CategoryController',['only'=>['index','store','show','update','destroy']])->names('admin.category');
+
+        Route::get('users','UserController@index')->name('admin.users.index');
+        Route::get('users/admins','UserController@admins')->name('admin.users.admin');
+        Route::delete('users/{user}','UserController@destroy')->name('admin.users.destroy');
+        Route::get('users/{user}','UserController@show')->name('admin.users.show');
+        Route::post('users/{$user}/admin','UserController@createAdmin')->name('admin.users.createadmin');
+        Route::delete('users/{$user}/admin','UserController@destroyAdmin')->name('admin.users.deleteadmin');
+
+        Route::get('settings','SettingController@index')->name('api.settings.index');
+        Route::post('settings','SettingController@save')->name('api.settings.update');
 
     });
 
-    Route::get('dashboard','DashboardController@index')->name('admin.dashboard.index');
 
-    Route::post('articles','ArticleController@store')->name('admin.articles.store');
-    Route::get('articles/{article}','ArticleController@show')->name('admin.articles.show');
-    Route::put('articles/{article}','ArticleController@update')->name('admin.articles.update');
-    Route::delete('articles/{article}','ArticleController@destroy')->name('admin.articles.destroy');
-    Route::get('articles/{article}/active','ArticleController@active')->name('admin.articles.active');
-    Route::get('articles/{article}/comments','ArticleController@comments')->name('admin.articles.comments');
 
-    Route::get('banners','BannerController@index')->name('admin.banners.index');
-    Route::post('banners','BannerController@store')->name('admin.banners.store');
-    Route::get('banners/{banner}','BannerController@show')->name('admin.banners.show');
-    Route::put('banners/{banner}','BannerController@update')->name('admin.banners.update');
-    Route::delete('banners/{banner}','BannerController@destroy')->name('admin.banners.destroy');
-    Route::get('banners/{banner}/active','BannerController@active')->name('admin.banners.active');
-
-    Route::get('comments','CommentController@index')->name('admin.comments.index');
-    Route::get('comments/{comment}','CommentController@show')->name('admin.comments.show');
-    Route::get('comments/approved','CommentController@approved')->name('admin.comments.approved');
-    Route::delete('comments/{comment}','CommentController@destroy')->name('admin.comments.destroy');
-
-    Route::get('feedbacks','FeedbackController@index')->name('admin.feedbacks.index');
-    Route::get('feedbacks/{feedback}','FeedbackController@show')->name('admin.feedbacks.show');
-    Route::delete('feedbacks/{feedback}','FeedbackController@destroy')->name('admin.feedbacks.destroy');
-    Route::get('feedbacks/{feedback}/read','FeedbackController@destroy')->name('admin.feedbacks.destroy');
-
-    Route::post('file/upload','FileController@store')->name('admin.files.upload');
-    Route::delete('file/delete','FileController@destroy')->name('admin.files.destroy');
-
-    Route::resource('category','CategoryController',['only'=>['index','store','show','update','destroy']])->names('admin.category');
-
-    Route::get('users','UserController@index')->name('admin.users.index');
-    Route::get('users/admins','UserController@admins')->name('admin.users.admin');
-    Route::delete('users/{user}','UserController@destroy')->name('admin.users.destroy');
-    Route::get('users/{user}','UserController@show')->name('admin.users.show');
-    Route::post('users/{$user}/admin','UserController@createAdmin')->name('admin.users.createadmin');
-    Route::delete('users/{$user}/admin','UserController@destroyAdmin')->name('admin.users.deleteadmin');
-
-    Route::get('settings','SettingController@index')->name('api.settings.index');
-    Route::post('settings','SettingController@save')->name('api.settings.update');
+    
 
     Route::get('cache-reset','CacheController@opcache_reset');
 

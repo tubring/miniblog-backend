@@ -1,11 +1,3 @@
-<!--
-Template Name: Laung
-Version: 1.0.0
-Theme URL: https://angrystudio.com/themes/laung-free-tailwind-css-personal-blog-template
-Author: AngryStudio
-License: AngryStudio License 
-License URI: https://angrystudio.com/license/
--->
 <!doctype html>
 <html lang="en">
    <head>
@@ -42,7 +34,10 @@ License URI: https://angrystudio.com/license/
                @include('home.layouts.sidebar')
             </div>
             <div class="col-span-12 md:col-span-8 lg:col-span-9">
-               @yield('navbar')
+               @section('navbar')
+                  @include('home.layouts.navbar')
+               @show
+
                <main class="p-4 md:p-5">
                  @yield('content')
                </main>

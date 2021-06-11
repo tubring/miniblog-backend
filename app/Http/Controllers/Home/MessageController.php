@@ -13,6 +13,7 @@ class MessageController extends Controller
     }
 
     public function store(FeedbackRequest $request, FeedbackRepository $repository){
+        
         $feedback = $repository->store($request->only(['name','content','contact'])+['user_id'=>auth()->id()]);
 
         return redirect()->route('home.message.index')->with('success',"发送成功");

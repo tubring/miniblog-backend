@@ -23,7 +23,7 @@ class ArticleRepository extends Repository{
         $articles = $query->with('category',function($query){
             $query->select('id','name');
         })->where('active',1)->orderBy('recommended')->latest()->paginate($per_page);
-        return $articles->toArray();
+        return $articles;
     }
 
     public function findOne(Article $article){
@@ -34,11 +34,11 @@ class ArticleRepository extends Repository{
     //点赞
     public function SetLike(Article $article, $request)
     {
-        // $uid = auth()->id();
+        $uid = auth()->id();
         // if(!$uid){
         //     return response()->json(['message'=>'用户未登录'],404);
         // }
-        $uid = 1;
+        // $uid = 1;
 
         $like = UserLike::where('post_type',UserLike::ARTICLE)->where('post_id',$article->id)->where('user_id',$uid)->first();
 
@@ -53,7 +53,7 @@ class ArticleRepository extends Repository{
         }elseif($like && $request->like == false ){
 
             $like->delete();
-            if($article->like>0){
+            if($article->likes>0){
                 $article->likes--;
             }
             
@@ -67,8 +67,12 @@ class ArticleRepository extends Repository{
         ];
     }
 
-    public function findComments($article_id){
-        $comments = Comment::where('article_id',$article_id)->paginate(10);
+    public function getComments($article_id){
+        
+        $comments = Comment::where('article_id',$article_id)->where(function($query){
+            $query->where('approved',1)->orWhere('user_id',auth()->id());
+
+        })->with('user')->latest()->paginate(10);
 
         return $comments;
     }

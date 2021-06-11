@@ -24,8 +24,19 @@ class CommentStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'article_id' => 'required',
+            // 'article_id' => 'required',
             'content' => 'required|min:5',
+            'captcha' => 'required|captcha',
+        ];
+    }
+
+    public function messages(){
+
+        return [
+            'content.required' => '[评论内容] 不能为空',
+            'content.min' => '[评论内容] 不能少于5个字符',
+            'captcha.required' => '[验证码] 不能为空',
+            'captcha.captcha' => '[验证码] 错误',
         ];
     }
 }

@@ -28,7 +28,7 @@ export default class LoginPage extends React.Component{
                                         <div>
                                             <img className="mx-auto h-12 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg" alt="Workflow"/>
                                             <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                                            Sign in to your account
+                                            后台登陆
                                             </h2>
                                         </div>
                                         <div className="mt-8 space-y-6">
@@ -55,13 +55,13 @@ export default class LoginPage extends React.Component{
                                                         // this.setState({remember_me:event.target.value})
                                                     }} />
                                                     <label htmlFor="remember_me" className="ml-2 block text-sm text-gray-900">
-                                                        Remember me
+                                                        记住我
                                                     </label>
                                                 </div>
 
                                                 <div className="text-sm">
                                                     <Link to="#" className="font-medium text-indigo-600 hover:text-indigo-500">
-                                                        Forgot your password?
+                                                        忘记密码?
                                                     </Link>
                                                 </div>
                                             </div>

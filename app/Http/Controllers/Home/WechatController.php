@@ -16,8 +16,10 @@ class WechatController extends Controller
         $this->auth = $auth; 
     }
    
+    //跳转到微信官方二维码页面
     public function login(){
-        return $this->auth->redirect();
+        $url = route('home.wechat.callback');
+        return $this->auth->redirect($url);
     }
 
     public function callback(Request $request){
@@ -62,6 +64,14 @@ class WechatController extends Controller
         auth()->login($user);
 
 
+    }
+
+    //页面内获取二维码
+    public function qrcode(){ 
+
+        $appid = config('services.wechat.appid');
+
+        return view('home.auth.wechat')->with('appid',$appid);
     }
 
 }

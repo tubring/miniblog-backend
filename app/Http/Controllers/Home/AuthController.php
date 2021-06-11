@@ -14,7 +14,6 @@ class AuthController extends Controller
         return view('home.auth.wechat')->with('appid',$appid);
     }
 
-
     public function login(){
     }
 

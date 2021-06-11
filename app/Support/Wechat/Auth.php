@@ -16,8 +16,10 @@ class Auth {
     }
 
     //
-    public function redirect(){
-
+    public function redirect($url=""){
+        if($url){
+            $this->reirect_uri = $url;
+        }
         $redirect_uri = urlencode($this->reirect_uri);
         $state = md5(time());
         $url = "https://open.weixin.qq.com/connect/qrconnect?appid=$this->appid&redirect_uri=$redirect_uri&response_type=code&scope=SCOPE&state=$state#wechat_redirect";

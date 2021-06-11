@@ -13,6 +13,7 @@ use App\Repositories\ArticleRepository;
 class ArticleController extends Controller
 {
     public function __construct(ArticleRepository $repository){
+        parent::__construct();
         $this->ArticleRepository = $repository;
     }
     
@@ -31,6 +32,10 @@ class ArticleController extends Controller
         $article->views++;
         $article->save();
 
+        if($article->active!=1){
+            abort(404);
+        }
+
         //用户是否点赞
         $like = false;
         if($uid = auth()->id()){
@@ -45,8 +50,10 @@ class ArticleController extends Controller
         return view('home.blog.show')->with('article',$article)->with('like',$like);
     }
 
+    //点赞
     public function like(Article $article, Request $request){
 
+        $this->authorize('like',$article);
 
         $result = $this->ArticleRepository->setLike($article,$request);
 
@@ -56,7 +63,7 @@ class ArticleController extends Controller
 
     public function comments(Article $article){
         
-        $comments = Comment::where('article_id',$article->id)->with('user')->paginate(10);
+        $comments = $this->ArticleRepository->getComments($article->id);
        
         return view('home.blog.comment')->with('comments',$comments)->with('article',$article);
 

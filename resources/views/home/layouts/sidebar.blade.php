@@ -20,7 +20,6 @@
                 <li class="mb-5"><a href="{{ route('home.index') }}" class="text-gray-300 hover:text-white">主页</a></li>
                 <li class="mb-5"><a href="#" class="text-gray-300 hover:text-white">分类</a></li>
                 <li class="mb-5"><a href="{{ route('home.article.index') }}" class="text-gray-300 hover:text-white">热门</a></li>
-                <li class="mb-5"><a href="#" class="text-gray-300 hover:text-white">Tags</a></li>
                 <li class="mb-5"><a href="{{ route('home.about.index') }}" class="text-gray-300 hover:text-white">关于</a></li>
                 <li><a href="{{ route('home.message.index') }}" class="text-gray-300 hover:text-white">留言</a></li>
             </ul>
@@ -28,19 +27,19 @@
         <div class="w-full mt-20">
             <ul>
                 <li class="inline-block mr-2">
-                    <a href="#"><img class="w-5" src="{{ asset('home/images/twitter.svg') }}"></a>
+                    <a href="//www.twitter.com/#"><img class="w-5" src="{{ asset('home/images/twitter.svg') }}"></a>
                 </li>
                 <li class="inline-block mr-2">
-                    <a href="#"><img class="w-5" src="{{ asset('home/images/youtube.svg') }}"></a>
+                    <a href="//www.youtube.com"><img class="w-5" src="{{ asset('home/images/youtube.svg') }}"></a>
                 </li>
                 <li class="inline-block mr-2">
-                    <a href="#"><img class="w-5" src="{{ asset('home/images/linkedin.svg') }}"></a>
+                    <a href="//www.likedin.com"><img class="w-5" src="{{ asset('home/images/linkedin.svg') }}"></a>
                 </li>
                 <li class="inline-block">
-                    <a href="#"><img class="w-5" src="{{ asset('home/images/facebook.svg') }}"></a>
+                    <a href="//www.facebook.com"><img class="w-5" src="{{ asset('home/images/facebook.svg') }}"></a>
                 </li>
             </ul>
-            <p class="text-gray-300 mt-5">&copy 2021 <a href="#">Tubring Studio</a>. 版权所有</p>
+            <p class="text-gray-300 mt-5">&copy 2021 <a href="//www.tubring.cn">Tubring Studio</a>. 版权所有</p>
         </div>
     </div>
 </aside>

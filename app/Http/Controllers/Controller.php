@@ -11,4 +11,9 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    public function __construct(){
+        // auth()->login(\App\Models\User::first());//test code 测试登录
+        // auth()->logout();
+    }
+
 }

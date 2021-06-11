@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Comment;
+use App\Models\Article;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class CommentPolicy
+class ArticlePolicy
 {
     use HandlesAuthorization;
 
@@ -25,10 +25,10 @@ class CommentPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Comment  $comment
+     * @param  \App\Models\=Article  $=Article
      * @return mixed
      */
-    public function view(User $user, Comment $comment)
+    public function view(User $user, Article $Article)
     {
         //
     }
@@ -48,10 +48,10 @@ class CommentPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Comment  $comment
+     * @param  \App\Models\=Article  $=Article
      * @return mixed
      */
-    public function update(User $user, Comment $comment)
+    public function update(User $user, Article $Article)
     {
         //
     }
@@ -60,24 +60,22 @@ class CommentPolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Comment  $comment
+     * @param  \App\Models\=Article  $=Article
      * @return mixed
      */
-    public function delete(User $user, Comment $comment)
+    public function delete(User $user, Article $Article)
     {
-        if($user->id==$comment->user_id||$user->is_admin){
-            return true;
-        }
+        //
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Comment  $comment
+     * @param  \App\Models\=Article  $=Article
      * @return mixed
      */
-    public function restore(User $user, Comment $comment)
+    public function restore(User $user, Article $Article)
     {
         //
     }
@@ -86,11 +84,16 @@ class CommentPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Comment  $comment
+     * @param  \App\Models\=Article  $=Article
      * @return mixed
      */
-    public function forceDelete(User $user, Comment $comment)
+    public function forceDelete(User $user, Article $Article)
     {
         //
     }
+
+    public function like(User $user){
+        if($user) return true;
+    }
+
 }

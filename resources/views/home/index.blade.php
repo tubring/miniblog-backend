@@ -1,7 +1,7 @@
 @extends('home.layouts.master')
 
 @section('navbar')
-    @include('home.layouts.navbar')
+    @include('home.layouts.navbar',['show_category'=>true])
 @endsection
 
 @section('content')
@@ -10,9 +10,9 @@
  <div class="bg-white rounded shadow mt-5">
     <div class="p-6 md:p-7 lg:p-9">
         @if(isset($article->category)&&$article->category->name)
-        <a href="#" class="font-bold text-red-500">{{ $article->category->name }}</a>
+        <a href="?category_id={{ $article->category_id }}" class="font-bold text-red-500">{{ $article->category->name }}</a>
         @endif
-        <h3 class="font-extrabold text-xl sm:text-2xl md:text-3xl lg:text-4xl mt-2"><a href="#">{{ $article->title }}</a></h3>
+        <h3 class="font-extrabold text-xl sm:text-2xl md:text-3xl lg:text-4xl mt-2"><a href="{{ route('home.article.show',$article->id) }}">{{ $article->title }}</a></h3>
         <div class="mt-3 mb-3 text-sm text-gray-700 flex items-center">
             <img src="home/images/author.jpg" class="rounded-full w-7 h-7 inline mr-2">
             <a href="#" class="font-bold text-gray-600">{{ $article->author }}</a>

@@ -24,8 +24,12 @@ Route::group(['namespace'=>'App\Http\Controllers\Home',],function(){
     Route::get('/', 'IndexController@index')->name('home.index');
     Route::get('/articles', 'ArticleController@index')->name('home.article.index');
     Route::get('/articles/{article}', 'ArticleController@show')->name('home.article.show');
-    Route::get('/articles/{article}/comments', 'ArticleController@comments')->name('home.article.comments');
     Route::post('/articles/{article}/like', 'ArticleController@like')->name('home.article.like');
+    Route::get('/articles/{article}/comments', 'ArticleController@comments')->name('home.article.comments');
+
+    Route::post('/articles/{article}/comments', 'CommentController@store')->name('home.comment.store');
+    Route::put('/articles/{article}/comments/{comment}', 'CommentController@update')->name('home.comment.update');
+    Route::delete('/articles/{article}/comments/{comment}', 'CommentController@destroy')->name('home.comment.delete');
 
     Route::get('/categories','CategoryController@index')->name('home.category.index');
 
@@ -38,6 +42,10 @@ Route::group(['namespace'=>'App\Http\Controllers\Home',],function(){
     Route::get('/logout','AuthController@logout')->name('home.auth.logout');
 
     Route::get('wechat/login','WechatController@login')->name('home.wechat.login');
+    Route::get('wechat/qrcode','WechatController@qrcode')->name('home.wechat.qrcode');
     Route::get('wechat/callback','WechatController@callback')->name('home.wechat.callback');
+
+    // Route::post('comment/{article}','CommentController@store')->name('home.comment.store');
+
 });
 
